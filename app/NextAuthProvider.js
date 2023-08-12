@@ -2,10 +2,10 @@
 
 import { SessionProvider } from "next-auth/react";
 
-export const NextAuthProvider = ({ children }) => {
+export const NextAuthProvider = ({ children, session }) => {
   // Use the 'useClient' hook if required
   // const client = useClient();
 
   // Return the SessionProvider component wrapping the children
-  return <SessionProvider>{children}</SessionProvider>;
+  return <SessionProvider session={session}>{children}</SessionProvider>;
 };

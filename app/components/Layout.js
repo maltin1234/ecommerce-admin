@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useSession, signIn, signOut } from "next-auth/react";
+
 import Nav from "./Nav";
 export default function Layout({ children }) {
   const { data: session } = useSession();
@@ -10,7 +11,10 @@ export default function Layout({ children }) {
       <div className={"bg-blue-900 w-screen h-screen flex items-center"}>
         <div className="text-center w-full">
           <button
-            onClick={() => signIn("google")}
+            onClick={(e) => {
+              e.preventDefault();
+              signIn("google");
+            }}
             className="bg-white p-2 px-4 rounded-lg"
           >
             Login With

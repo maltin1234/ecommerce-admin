@@ -3,9 +3,8 @@ import Layout from "./components/Layout";
 import "./globals.css";
 import { SessionProvider } from "next-auth/react";
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "../pages/api/auth/[...nextauth]";
-export default async function RootLayout({ children }) {
-  const session = await getServerSession(authOptions);
+
+export default async function RootLayout({ session, children }) {
   return (
     <html>
       <head />

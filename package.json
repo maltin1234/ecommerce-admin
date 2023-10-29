@@ -15,6 +15,7 @@
     "dotenv": "^16.3.1",
     "eslint": "8.44.0",
     "eslint-config-next": "13.4.9",
+    "git-filter-repo": "^0.0.30",
     "mongod": "^2.0.0",
     "mongodb": "^5.8.1",
     "mongoose": "^7.4.3",

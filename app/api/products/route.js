@@ -1,6 +1,5 @@
 import { connectDB } from "@/lib/mongodb";
 import Product from "@/models/Product";
-
 import { NextResponse } from "next/server";
 
 export async function POST(req) {
@@ -24,12 +23,11 @@ export async function POST(req) {
     });
   }
 }
-export async function GET(req) {
-  try {
-    // Connect to the database
-    await connectDB();
 
-    // Create a new product
+export async function GET() {
+  try {
+    // No need to connect to the database here, as the connection is already established during server startup.
+
     // Retrieve products
     const products = await Product.find({});
 
@@ -50,8 +48,7 @@ export async function PUT(req) {
   const { _id, title, description, price } = await req.json();
 
   try {
-    // Connect to the database
-    await connectDB();
+    // No need to connect to the database here, as the connection is already established during server startup.
 
     // Find the product by ID and update its properties
     const updatedProduct = await Product.findByIdAndUpdate(_id, {

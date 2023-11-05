@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -18,18 +18,29 @@ export default function ProductForm({
   async function createdProduct(ev) {
     ev.preventDefault();
     const data = { title, description, price };
-    if (_id) {
-      //updte
-      await axios.put("/api/products", { ...data, _id });
+    try {
+      if (_id) {
+        // Update existing product
+        await axios.put("/api/products", { ...data, _id });
+      } else {
+        // Create a new product
+        await axios.post("/api/products", data);
+      }
+      // Set the state to navigate after a successful request
       setGoToProducts(true);
-    } else {
-      await axios.post("/api/products", data);
-      setGoToProducts(true);
+    } catch (error) {
+      // Handle any errors that may occur during the HTTP request
+      console.error("Error creating/updating product:", error);
     }
   }
-  if (goToProducts) {
-    router.push("/products");
-  }
+
+  useEffect(() => {
+    if (goToProducts) {
+      // Use the router to navigate to the products page
+      router.push("/products");
+    }
+  }, [goToProducts, router]);
+
   return (
     <>
       <form onSubmit={createdProduct}>

@@ -1,13 +1,12 @@
 import { connectDB } from "@/lib/mongodb";
 import Product from "@/models/Product";
 import { NextResponse } from "next/server";
-
+connectDB();
 export async function POST(req) {
   const { title, description, price } = await req.json();
 
   try {
     // Connect to the database
-    await connectDB();
 
     // Create a new product
     await Product.create({ title, description, price });
@@ -73,6 +72,36 @@ export async function PUT(req) {
     return NextResponse.json({
       success: false,
       error: "An error occurred while updating the product.",
+    });
+  }
+}
+
+export async function DELETE(req) {
+  const { _id } = await req.json();
+
+  try {
+    // Connect to the database
+    //await connectDB();
+
+    // Find the product by ID and delete it
+    const deletedProduct = await Product.findByIdAndDelete(_id);
+
+    if (!deletedProduct) {
+      return NextResponse.json({
+        success: false,
+        error: "Product not found.",
+      });
+    }
+
+    return NextResponse.json({
+      success: true,
+      product: deletedProduct,
+    });
+  } catch (error) {
+    console.error("Error deleting product:", error);
+    return NextResponse.json({
+      success: false,
+      error: "An error occurred while deleting the product.",
     });
   }
 }

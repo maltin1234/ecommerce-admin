@@ -75,16 +75,14 @@ export async function PUT(req) {
     });
   }
 }
-
 export async function DELETE(req) {
-  const { _id } = await req.json();
+  const id = req.query.id;
 
   try {
-    // Connect to the database
-    //await connectDB();
+    // No need to connect to the database here, as the connection is already established during server startup.
 
     // Find the product by ID and delete it
-    const deletedProduct = await Product.findByIdAndDelete(_id);
+    const deletedProduct = await Product.findByIdAndDelete(id);
 
     if (!deletedProduct) {
       return NextResponse.json({

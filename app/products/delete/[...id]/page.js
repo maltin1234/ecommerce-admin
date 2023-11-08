@@ -12,6 +12,7 @@ export default function Page() {
       return;
     }
     axios.get(`/api/products?id=` + id).then((response) => {
+      console.log(response.data);
       const products = response.data.products;
       const foundProduct = products.find((product) => product._id === id);
       if (foundProduct) {
@@ -24,7 +25,7 @@ export default function Page() {
   async function deleteProduct() {
     try {
       console.log("idddd" + id);
-      await axios.delete(`/api/products?id=` + id);
+      await axios.post(`/api/products/delete`, { id });
       router.back();
     } catch (error) {
       // Handle errors here
